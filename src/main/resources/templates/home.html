@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+
+<form th:method="post" th:action="@{/room/create}">
+    <input type="hidden" name="name" value="value" />
+    <a onclick="this.parentNode.submit();">click here</a>
+</form>
+
+</body>
+</html>
