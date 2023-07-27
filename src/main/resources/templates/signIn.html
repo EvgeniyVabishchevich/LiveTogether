@@ -16,6 +16,8 @@
     <button type="submit" th:text="Submit"></button>
 </form>
 
+<p th:if="${param.error}" th:text="'Wrong username or password'"></p>
+
 <a th:href="@{/register}" th:text="Register"></a>
 
 </body>

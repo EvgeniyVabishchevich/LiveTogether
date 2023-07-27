@@ -2,11 +2,13 @@ package by.natariyz.livetogether.controller;
 
 import by.natariyz.livetogether.dto.UserDto;
 import by.natariyz.livetogether.service.UserService;
+import by.natariyz.livetogether.validationForms.register.RegisterForm;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,15 +22,22 @@ public class RegisterController {
 
     @GetMapping
     public ModelAndView showRegisterPage() {
-        return new ModelAndView(REGISTER);
+        ModelAndView modelAndView = new ModelAndView(REGISTER);
+
+        modelAndView.addObject(new RegisterForm());
+
+        return modelAndView;
     }
 
     @PostMapping
-    public ModelAndView registerUser(@RequestParam String login, @RequestParam String password,
-                                     @RequestParam String passwordRepeat) {
-        UserDto userDto = new UserDto(login);
+    public ModelAndView registerUser(@Valid RegisterForm registerForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView(REGISTER);
+        }
 
-        userService.save(userDto, password);
+        UserDto userDto = new UserDto(registerForm.getLogin());
+
+        userService.save(userDto, registerForm.getPassword());
 
         return new ModelAndView("redirect:/login");
     }

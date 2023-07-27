@@ -6,15 +6,24 @@
 </head>
 <body>
 
-<form th:method="post" th:action="@{/register}">
+<form th:method="post" th:action="@{/register}" th:object="${registerForm}">
     <label th:for="login" th:text="Login"></label>
     <input type="text" th:name="login" th:id="login">
+    <span th:if="${#fields.hasErrors('login')}"
+          th:errors="*{login}"></span>
+    <br/>
 
     <label th:for="password" th:text="Password"></label>
     <input type="text" th:name="password" th:id="password">
+    <span th:if="${#fields.hasErrors('password')}"
+          th:errors="*{password}"></span>
+    <br/>
 
     <label th:for="passwordRepeat" th:text="'Repeat password'"></label>
     <input type="text" th:name="passwordRepeat" th:id="PasswordRepeat">
+    <span th:if="${#fields.hasErrors('passwordRepeat')}"
+          th:errors="*{passwordRepeat}"></span>
+    <br/>
 
     <button type="submit" th:text="Submit"></button>
 </form>
